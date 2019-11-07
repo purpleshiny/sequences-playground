@@ -1,7 +1,8 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 Notes on other things I've done:
-https://github.com/gitname/react-gh-pages to hopefully publish to github
+https://github.com/gitname/react-gh-pages to publish to github
+https://react.semantic-ui.com/usage for some nice looking widgets to play with
 
 ## Available Scripts
 
