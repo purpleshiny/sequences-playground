@@ -1,8 +1,10 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 Notes on other things I've done:
-https://github.com/gitname/react-gh-pages to publish to github
-https://react.semantic-ui.com/usage for some nice looking widgets to play with
+- https://github.com/gitname/react-gh-pages to publish to github
+- https://react.semantic-ui.com/usage for some nice looking widgets to play with
+- https://react.semantic-ui.com/collections/table/#variations-sortable looks like a good widget for the sortable list!
+- Importing the example JSON as default data for now
 
 ## Available Scripts
 
