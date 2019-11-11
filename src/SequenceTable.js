@@ -5,11 +5,17 @@ import SequenceModal from './SequenceModal';
 export default class SequenceTable extends Component {
     constructor(props) {
         super(props);
-        this.state = {items: props.items};
+        this.state = {
+            sortDirection: "asc",
+            sortColumn: "sequenceName"
+        };
     }
 
     render() {
-        let items = [...this.state.items].sort((a, b) => a.sequenceName.localeCompare(b.sequenceName))
+        let items = [...this.props.items].sort((a, b) => a.sequenceName.localeCompare(b.sequenceName))
+        //TODO: sort by direction and column
+        //TODO: update direction and column from header row click
+        //TODO: filter based on filter text (which comes from props)
         return (
             <Table fixed sortable>
                 <Table.Header>
