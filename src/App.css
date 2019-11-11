@@ -16,3 +16,23 @@
 .App-link {
   color: #09d3ac;
 }
+
+.A {
+  color: black;
+}
+
+.T {
+  color: orange;
+}
+
+.C {
+  color: skyblue;
+}
+
+.G {
+  color: purple;
+}
+
+.sequence {
+  word-break: break-all;
+}
