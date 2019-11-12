@@ -12,6 +12,24 @@ export default class SequenceTable extends Component {
         this.handleSort = this.handleSort.bind(this);
     }
 
+    getDirection(newColumn, oldColumn, oldDirection) {
+        // if we are re-sorting the current column, then we want to invert the current direction
+        if (newColumn === oldColumn) {
+            return oldDirection === "ascending" ? "descending" : "ascending"
+        }
+        // otherwise, just return the default for a new sort for the new column
+        return "descending"
+    }
+
+    handleSort(sortedBy) {
+        return () => {
+            this.setState((state) => ({
+                column: sortedBy,
+                direction: this.getDirection(sortedBy, state.column, state.direction)
+            }));
+        }
+    }
+
     filterItem(item, filterText) {
         if (item.sequenceName.toLowerCase().includes(filterText.toLowerCase())) {
             return true;
@@ -22,38 +40,25 @@ export default class SequenceTable extends Component {
         return false;
     }
 
-    invertSort(oldDirection) {
-        return oldDirection === "ascending" ? "descending" : "ascending"
-    }
-
-    // if we are re-sorting the current column, then we want to invert the current direction
-    // otherwise, we are sorting a new column.
-    getDirection(newColumn, oldColumn, oldDirection) {
-        return oldColumn === newColumn ? this.invertSort(oldDirection) : "descending"
-    }
-
-    handleSort(sortedBy) {
-        return () => {
-            this.setState((state) => ({
-                column: sortedBy,
-                direction: state.column === sortedBy ? this.invertSort(state.direction) : "descending"
-            }));
+    prepareData(data, filterText, column, direction) {
+        let items = []
+        if (filterText === "") {
+            items = [...data]
+        } else {
+            items = data.filter(item => this.filterItem(item, filterText))
         }
+        if (direction === "descending") {
+            items = items.sort((a, b) => a[column].localeCompare(b[column]))
+        } else {
+            items = items.sort((a, b) => b[column].localeCompare(a[column]))
+        }
+        return items
     }
 
     render() {
         const {column, direction} = this.state;
-        let items = []
-        if (this.props.filterText === "") {
-            items = [...this.props.items]
-        } else {
-            items = this.props.items.filter(item => this.filterItem(item, this.props.filterText))
-        }
-        if (direction === "descending") {
-            items = items.sort((a, b) => a[this.state.column].localeCompare(b[this.state.column]))
-        } else {
-            items = items.sort((a, b) => b[this.state.column].localeCompare(a[this.state.column]))
-        }
+        const filterText = this.props.filterText;
+        let items = this.prepareData(this.props.items, filterText, column, direction)
         //TODO: sort by direction and column
         //TODO: update direction and column from header row click
         return (
