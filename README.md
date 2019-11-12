@@ -4,13 +4,15 @@ Notes on other things I've done:
 - https://github.com/gitname/react-gh-pages to publish to github
 - https://react.semantic-ui.com/usage for some nice looking widgets to base the app on
 
-Things I'd do if this weren't a toy project/had more time:
-- use routes to enable the Add Sequence flow to feel like its own page rather than a modal
+Things I'd do if I had more time:
+- use the `prop-types` library to make it clear what props are required for each component and what the types are
+- use routes/full-page views to enable the Add Sequence flow to feel like its own page rather than a modal
 - separate components into "container" components with state and "pure" components for rendering
 - tests for important logic as opposed to manual tests
 - actually write data to backend
 - pagination to keep page performance reasonable with very large datasets (this is a hunch)
-- upload
+- import/export
+- subsequence highlighting in DNA sequences? ask users what they want
 
 ## Available Scripts
 
