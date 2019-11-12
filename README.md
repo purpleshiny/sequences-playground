@@ -5,6 +5,7 @@ Notes on other things I've done:
 - https://react.semantic-ui.com/usage for some nice looking widgets to base the app on
 
 Things I'd do if this weren't a toy project/had more time:
+- use routes to enable the Add Sequence flow to feel like its own page rather than a modal
 - separate components into "container" components with state and "pure" components for rendering
 - tests for important logic as opposed to manual tests
 - actually write data to backend
