@@ -8,9 +8,10 @@ import {Container, Header} from "semantic-ui-react";
 function App() {
   return (
     <div>
-      <Header as="h1" textAlign="center" className="App-header">DNA Sequences</Header>    <Container>
-      <SequencesViewer items={examples.sequences}></SequencesViewer>
-    </Container>
+      <Header as="h1" textAlign="center" className="App-header">DNA Sequences</Header> 
+      <Container>
+        <SequencesViewer items={examples.sequences}></SequencesViewer>
+      </Container>
     </div>
   );
 }

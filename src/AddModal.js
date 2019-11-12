@@ -15,16 +15,14 @@ export default class AddModal extends Component {
 
     constructor(props) {
         super(props);
-        this.state = emptyState
+        this.state = emptyState;
       }
 
-    handleOpen = () => this.setState({ open: true })
+    handleOpen = () => this.setState({ open: true });
 
     handleClose = () => this.setState(emptyState);
 
-    handleChange = (e, { name, value }) => {
-        this.setState({ [name]: value, errors: [] })
-    } 
+    handleChange = (e, { name, value }) => this.setState({ [name]: value, errors: [] });
 
     handleAdd = (e) => {
         e.preventDefault();
@@ -38,12 +36,12 @@ export default class AddModal extends Component {
             this.props.addFunc(item);
             this.setState(emptyState);
         } else {
-            this.setState({errors: errors})
+            this.setState({errors: errors});
         }
     }
 
     render() {
-        const { sequenceName, sequenceDescription, sequence, errors, open } = this.state
+        const { sequenceName, sequenceDescription, sequence, errors, open } = this.state;
         return(
             <Modal as={Form}
                    trigger={<Button onClick={this.handleOpen}>Add Sequence</Button>}
