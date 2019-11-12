@@ -37,10 +37,10 @@ export default class AddModal extends Component {
         const item = {
             "sequenceName": this.state.sequenceName,
             "sequenceDescription": this.state.sequenceDescription,
-            "sequence": this.state.sequence
+            "sequence": this.state.sequence.toUpperCase()
         };
         let errors = this.props.validFunc(item);
-        if (!errors) {
+        if (errors.length === 0) {
             this.props.addFunc(item);
             this.handleClose();
         } else {
@@ -82,7 +82,7 @@ export default class AddModal extends Component {
                     <Message
                     error
                     header="Error adding sequence"
-                    content={this.state.errors}
+                    content={this.state.errors.join("; ")}
                     />
                 </Modal.Content>
                 <Modal.Actions>

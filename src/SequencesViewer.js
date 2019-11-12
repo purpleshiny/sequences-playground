@@ -1,4 +1,5 @@
 import React , { Component } from 'react';
+import _ from 'lodash';
 import { Container, Grid, Input} from "semantic-ui-react";
 import SequenceTable from './SequenceTable';
 import AddModal from './AddModal';
@@ -14,15 +15,37 @@ export default class SequencesViewer extends Component {
         super(props);
         this.state = {items: props.items, filterText: ""};
         this.addAnItem = this.addAnItem.bind(this);
+        this.validateAnItem = this.validateAnItem.bind(this);
     }
 
     addAnItem(item) {
         this.setState((state) => ({items: state.items.concat(item)}))
     }
 
-    // return an 
+    // return an array of errors
     validateAnItem(item) {
-        return ["problem!"]
+        let errors = [];
+        if (_.find(this.state.items, {sequenceName: item.sequenceName})) {
+            errors.push("There's already a sequence with this name");
+        }
+        if (_.find(this.state.items, {sequence: item.sequence})) {
+            errors.push("There's already another entry for this sequence");
+        }
+        if (item.sequenceName === "") {
+            errors.push("Name is required");
+        }
+        if (item.sequenceDescription === "") {
+            errors.push("Description is required");
+        }
+        if (item.sequence === "") {
+            errors.push("Sequence is required");
+        } else { // This check only makes sense for a non-null value
+            let nonDNA = item["sequence"].search(/[^ATCG]/g);
+            if (nonDNA !== -1) {
+                errors.push(`Non-DNA character found at position ${nonDNA}`);
+            }
+        }
+        return errors;
     }
 
     render() {
