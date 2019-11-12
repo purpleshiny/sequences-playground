@@ -15,10 +15,10 @@ export default class SequenceTable extends Component {
     getDirection(newColumn, oldColumn, oldDirection) {
         // if we are re-sorting the current column, then we want to invert the current direction
         if (newColumn === oldColumn) {
-            return oldDirection === "ascending" ? "descending" : "ascending"
+            return oldDirection === "ascending" ? "descending" : "ascending";
         }
         // otherwise, just return the default for a new sort for the new column
-        return "descending"
+        return "descending";
     }
 
     handleSort(sortedBy) {
@@ -41,18 +41,18 @@ export default class SequenceTable extends Component {
     }
 
     prepareData(data, filterText, column, direction) {
-        let items = []
+        let items = [];
         if (filterText === "") {
-            items = [...data]
+            items = [...data];
         } else {
             items = data.filter(item => this.filterItem(item, filterText))
         }
         if (direction === "descending") {
-            items = items.sort((a, b) => a[column].localeCompare(b[column]))
+            items = items.sort((a, b) => a[column].localeCompare(b[column]));
         } else {
-            items = items.sort((a, b) => b[column].localeCompare(a[column]))
+            items = items.sort((a, b) => b[column].localeCompare(a[column]));
         }
-        return items
+        return items;
     }
 
     render() {

@@ -19,10 +19,11 @@ export default class SequencesViewer extends Component {
     // handle validation and updates. In a world with upload, it could reuse this functionality.
 
     addAnItem(item) {
-        this.setState((state) => ({items: state.items.concat(item)}))
+        this.setState((state) => ({items: state.items.concat(item)}));
     }
 
-    // return an array of errors
+    // given a sequence entry, return an array of errors
+    // consider breaking this up in some way if more validation logic is added
     validateAnItem(item) {
         let errors = [];
         if (_.find(this.state.items, {sequenceName: item.sequenceName})) {
@@ -40,7 +41,7 @@ export default class SequencesViewer extends Component {
         if (item.sequence === "") {
             errors.push("Sequence is required");
         } 
-        // We only need the first occurance of a non-allowed letter, so .search makes sense
+        // We only need the first occurance of a non-allowed letter, so .search makes sense here
         let nonDNA = item["sequence"].search(/[^ATCG]/g);
         if (nonDNA !== -1) {
             errors.push(`Non-DNA character found at position ${nonDNA}`);
@@ -50,7 +51,7 @@ export default class SequencesViewer extends Component {
 
     // it would be great to debounce this
     updateSearch(e, data) {
-        this.setState({filterText: data.value})
+        this.setState({filterText: data.value});
     }
 
     render() {

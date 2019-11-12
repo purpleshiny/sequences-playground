@@ -3,13 +3,10 @@ import {Modal, Button} from "semantic-ui-react";
 
 export default class SequenceModal extends Component {
 
-    renderLetter(letter, i) {
-        return <span className={letter} key={i}>{letter}</span>
-    }
-
-    taggedSequence(sequenceText) {
-        let sequenceArr = [...sequenceText]
-        return sequenceArr.map((item,i) => {return this.renderLetter(item, i)})
+    // return an array of spans styled with a class of the same name as the letter,
+    // eg <span className=A>
+    colorSequence(sequenceText) {
+        return [...sequenceText].map((letter,i) => {return <span className={letter} key={i}>{letter}</span>});
     }
 
     render() {
@@ -17,7 +14,7 @@ export default class SequenceModal extends Component {
             <Modal trigger={<Button>View</Button>}>
                 <Modal.Header>Sequence</Modal.Header>
                 <Modal.Content scrolling className="sequence">
-                    {this.taggedSequence(this.props.sequence)}
+                    {this.colorSequence(this.props.sequence)}
                 </Modal.Content>
             </Modal>
         )
