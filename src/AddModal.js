@@ -1,6 +1,7 @@
 import React , { Component } from 'react';
 import {Modal, Form, Button, Message} from 'semantic-ui-react';
 
+// we will want the state to look like this initially, after a successful save, and after closing the window
 const emptyState = {
     sequenceName: "",
     sequenceDescription: "",
@@ -9,56 +10,48 @@ const emptyState = {
     errors: []
 }
 
-// things this needs to be given:
-// a validate method that knows the up-to-date state of all sequences
+// required props: an addFunc and a validationFunc
 export default class AddModal extends Component {
 
     constructor(props) {
         super(props);
-        this.handleAdd = this.handleAdd.bind(this);
-        this.handleClose = this.handleClose.bind(this);
-        this.handleChange = this.handleChange.bind(this);
-        this.handleOpen = this.handleOpen.bind(this);
         this.state = emptyState
       }
 
     handleOpen = () => this.setState({ open: true })
 
-    handleClose() {
-        this.setState(emptyState);
-    }
+    handleClose = () => this.setState(emptyState);
 
-    handleChange(e, { name, value }) {
+    handleChange = (e, { name, value }) => {
         this.setState({ [name]: value, errors: [] })
     } 
 
-    handleAdd(e) {
+    handleAdd = (e) => {
         e.preventDefault();
         const item = {
             "sequenceName": this.state.sequenceName,
             "sequenceDescription": this.state.sequenceDescription,
-            "sequence": this.state.sequence.toUpperCase()
+            "sequence": this.state.sequence.toUpperCase() // this seems like the right thing to do
         };
-        let errors = this.props.validFunc(item);
+        let errors = this.props.validationFunc(item);
         if (errors.length === 0) {
             this.props.addFunc(item);
-            this.handleClose();
+            this.setState(emptyState);
         } else {
             this.setState({errors: errors})
         }
-        
     }
 
     render() {
-        const { sequenceName, sequenceDescription, sequence } = this.state
+        const { sequenceName, sequenceDescription, sequence, errors, open } = this.state
         return(
             <Modal as={Form}
                    trigger={<Button onClick={this.handleOpen}>Add Sequence</Button>}
                    closeIcon
-                   error = {this.state.errors.length > 0}
+                   error = {errors.length > 0}
                    closeOnDimmerClick={false}
                    onClose={this.handleClose}
-                   open={this.state.open}>
+                   open={open}>
                 <Modal.Header>Add New Sequence</Modal.Header>
                 <Modal.Content>
                     <Form.Input 
@@ -82,7 +75,7 @@ export default class AddModal extends Component {
                     <Message
                     error
                     header="Error adding sequence"
-                    content={this.state.errors.join("; ")}
+                    content={errors.join("; ")}
                     />
                 </Modal.Content>
                 <Modal.Actions>

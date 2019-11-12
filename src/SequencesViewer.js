@@ -16,7 +16,7 @@ export default class SequencesViewer extends Component {
     // I decided to pass addAnItem and validateAnItem as functions to the add modal
     // rather than passing all the data in, because it feels like the modal should not depend
     // on receiving all of that context, just on the existence of something which can
-    // handle validation and updates.
+    // handle validation and updates. In a world with upload, it could reuse this functionality.
 
     addAnItem(item) {
         this.setState((state) => ({items: state.items.concat(item)}))
@@ -61,7 +61,7 @@ export default class SequencesViewer extends Component {
                     <Input icon='search' placeholder='Search...' onChange={this.updateSearch}/>
                     </Grid.Column>
                     <Grid.Column width={3} floated="right">
-                        <AddModal addFunc={this.addAnItem} validFunc={this.validateAnItem}></AddModal>
+                        <AddModal addFunc={this.addAnItem} validationFunc={this.validateAnItem}></AddModal>
                     </Grid.Column>
                 </Grid>
                 <SequenceTable items={this.state.items} filterText={this.state.filterText}></SequenceTable>
