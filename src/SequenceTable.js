@@ -6,9 +6,10 @@ export default class SequenceTable extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            direction: "asc",
-            column: "sequenceName"
+            column: "sequenceName",
+            direction: "descending"
         };
+        this.handleSort = this.handleSort.bind(this);
     }
 
     filterItem(item, filterText) {
@@ -21,22 +22,58 @@ export default class SequenceTable extends Component {
         return false;
     }
 
+    invertSort(oldDirection) {
+        return oldDirection === "ascending" ? "descending" : "ascending"
+    }
+
+    // if we are re-sorting the current column, then we want to invert the current direction
+    // otherwise, we are sorting a new column.
+    getDirection(newColumn, oldColumn, oldDirection) {
+        return oldColumn === newColumn ? this.invertSort(oldDirection) : "descending"
+    }
+
+    handleSort(sortedBy) {
+        return () => {
+            this.setState((state) => ({
+                column: sortedBy,
+                direction: state.column === sortedBy ? this.invertSort(state.direction) : "descending"
+            }));
+        }
+    }
+
     render() {
+        const {column, direction} = this.state;
         let items = []
         if (this.props.filterText === "") {
             items = [...this.props.items]
         } else {
             items = this.props.items.filter(item => this.filterItem(item, this.props.filterText))
         }
-        items = items.sort((a, b) => a.sequenceName.localeCompare(b.sequenceName))
+        if (direction === "descending") {
+            items = items.sort((a, b) => a[this.state.column].localeCompare(b[this.state.column]))
+        } else {
+            items = items.sort((a, b) => b[this.state.column].localeCompare(a[this.state.column]))
+        }
         //TODO: sort by direction and column
         //TODO: update direction and column from header row click
         return (
             <Table fixed sortable>
                 <Table.Header>
                     <Table.Row>
-                        <Table.HeaderCell width="two" sorted="ascending">Name</Table.HeaderCell>
-                        <Table.HeaderCell width="six">Description</Table.HeaderCell>
+                        <Table.HeaderCell
+                            width="two"
+                            sorted={column === 'sequenceName' ? direction : null}
+                            onClick={this.handleSort('sequenceName')}
+                        >
+                            Name
+                        </Table.HeaderCell>
+                        <Table.HeaderCell
+                            width="six"
+                            sorted={column === 'sequenceDescription' ? direction : null}
+                            onClick={this.handleSort('sequenceDescription')}
+                        >
+                            Description
+                        </Table.HeaderCell>
                         <Table.HeaderCell width="six">Sequence Preview</Table.HeaderCell>
                         <Table.HeaderCell width="two"></Table.HeaderCell>
                     </Table.Row>
