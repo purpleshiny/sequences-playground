@@ -16,6 +16,7 @@ export default class SequencesViewer extends Component {
         this.state = {items: props.items, filterText: ""};
         this.addAnItem = this.addAnItem.bind(this);
         this.validateAnItem = this.validateAnItem.bind(this);
+        this.updateSearch = this.updateSearch.bind(this);
     }
 
     addAnItem(item) {
@@ -48,18 +49,23 @@ export default class SequencesViewer extends Component {
         return errors;
     }
 
+    // it would be great to debounce this
+    updateSearch(e, data) {
+        this.setState({filterText: data.value})
+    }
+
     render() {
         return (
             <Container>
                 <Grid columns={2}>
                     <Grid.Column width={13}>
-                    <Input icon='search' placeholder='Search...' />
+                    <Input icon='search' placeholder='Search...' onChange={this.updateSearch}/>
                     </Grid.Column>
                     <Grid.Column width={3} floated="right">
                         <AddModal addFunc={this.addAnItem} validFunc={this.validateAnItem}></AddModal>
                     </Grid.Column>
                 </Grid>
-                <SequenceTable items={this.state.items}></SequenceTable>
+                <SequenceTable items={this.state.items} filterText={this.state.filterText}></SequenceTable>
             </Container>
         )
     }

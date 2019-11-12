@@ -6,16 +6,31 @@ export default class SequenceTable extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            sortDirection: "asc",
-            sortColumn: "sequenceName"
+            direction: "asc",
+            column: "sequenceName"
         };
     }
 
+    filterItem(item, filterText) {
+        if (item.sequenceName.toLowerCase().includes(filterText.toLowerCase())) {
+            return true;
+        }
+        if (item.sequenceDescription.toLowerCase().includes(filterText.toLowerCase())) {
+            return true;
+        }
+        return false;
+    }
+
     render() {
-        let items = [...this.props.items].sort((a, b) => a.sequenceName.localeCompare(b.sequenceName))
+        let items = []
+        if (this.props.filterText === "") {
+            items = [...this.props.items]
+        } else {
+            items = this.props.items.filter(item => this.filterItem(item, this.props.filterText))
+        }
+        items = items.sort((a, b) => a.sequenceName.localeCompare(b.sequenceName))
         //TODO: sort by direction and column
         //TODO: update direction and column from header row click
-        //TODO: filter based on filter text (which comes from props)
         return (
             <Table fixed sortable>
                 <Table.Header>
