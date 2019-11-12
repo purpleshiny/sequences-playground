@@ -33,7 +33,7 @@ export default class SequenceTable extends Component {
                          <Table.Cell>{item.sequenceName}</Table.Cell>
                          <Table.Cell>{item.sequenceDescription}</Table.Cell>
                          <Table.Cell>{item.sequence.substring(0, 100) + "..."}</Table.Cell>
-                         <Table.Cell><SequenceModal sequence={item.sequence}></SequenceModal></Table.Cell>
+                         <Table.Cell textAlign="center"><SequenceModal sequence={item.sequence}></SequenceModal></Table.Cell>
                      </Table.Row>
                     ))
                 }

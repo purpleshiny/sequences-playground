@@ -14,7 +14,7 @@ export default class SequenceModal extends Component {
 
     render() {
         return(
-            <Modal trigger={<Button>View Sequence</Button>}>
+            <Modal trigger={<Button>View</Button>}>
                 <Modal.Header>Sequence</Modal.Header>
                 <Modal.Content scrolling className="sequence">
                     {this.taggedSequence(this.props.sequence)}

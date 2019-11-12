@@ -20,6 +20,11 @@ export default class SequencesViewer extends Component {
         this.setState((state) => ({items: state.items.concat(item)}))
     }
 
+    // return an 
+    validateAnItem(item) {
+        return ["problem!"]
+    }
+
     render() {
         return (
             <Container>
@@ -28,7 +33,7 @@ export default class SequencesViewer extends Component {
                     <Input icon='search' placeholder='Search...' />
                     </Grid.Column>
                     <Grid.Column width={3} floated="right">
-                        <AddModal addFunc={this.addAnItem}></AddModal>
+                        <AddModal addFunc={this.addAnItem} validFunc={this.validateAnItem}></AddModal>
                     </Grid.Column>
                 </Grid>
                 <SequenceTable items={this.state.items}></SequenceTable>
