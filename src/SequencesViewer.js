@@ -4,12 +4,6 @@ import { Container, Grid, Input} from "semantic-ui-react";
 import SequenceTable from './SequenceTable';
 import AddModal from './AddModal';
 
-// state that we need for this thing:
-// search term
-// sort column
-// sort direction
-// full list of items
-
 export default class SequencesViewer extends Component {
     constructor(props) {
         super(props);
@@ -18,6 +12,11 @@ export default class SequencesViewer extends Component {
         this.validateAnItem = this.validateAnItem.bind(this);
         this.updateSearch = this.updateSearch.bind(this);
     }
+
+    // I decided to pass addAnItem and validateAnItem as functions to the add modal
+    // rather than passing all the data in, because it feels like the modal should not depend
+    // on receiving all of that context, just on the existence of something which can
+    // handle validation and updates.
 
     addAnItem(item) {
         this.setState((state) => ({items: state.items.concat(item)}))
@@ -40,11 +39,11 @@ export default class SequencesViewer extends Component {
         }
         if (item.sequence === "") {
             errors.push("Sequence is required");
-        } else { // This check only makes sense for a non-null value
-            let nonDNA = item["sequence"].search(/[^ATCG]/g);
-            if (nonDNA !== -1) {
-                errors.push(`Non-DNA character found at position ${nonDNA}`);
-            }
+        } 
+        // We only need the first occurance of a non-allowed letter, so .search makes sense
+        let nonDNA = item["sequence"].search(/[^ATCG]/g);
+        if (nonDNA !== -1) {
+            errors.push(`Non-DNA character found at position ${nonDNA}`);
         }
         return errors;
     }
