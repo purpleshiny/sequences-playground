@@ -59,8 +59,6 @@ export default class SequenceTable extends Component {
         const {column, direction} = this.state;
         const filterText = this.props.filterText;
         let items = this.prepareData(this.props.items, filterText, column, direction)
-        //TODO: sort by direction and column
-        //TODO: update direction and column from header row click
         return (
             <Table fixed sortable>
                 <Table.Header>
